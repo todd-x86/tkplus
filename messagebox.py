@@ -1,5 +1,5 @@
 import tkMessageBox
-from application import app
+from form import Form, check_handle
 YES_NO_CANCEL = 0
 YES_NO = 1
 OK_CANCEL = 2
@@ -9,23 +9,23 @@ OK = True
 NO = False
 CANCEL = None
 
+@check_handle
 def show(text, title="Message"):
-    app.non_use()
     tkMessageBox.showinfo(title, text)
     return True
 
+@check_handle
 def error(text, title="Error"):
-    app.non_use()
     tkMessageBox.showerror(title, text)
     return True
 
+@check_handle
 def warning(text, title="Warning"):
-    app.non_use()
     tkMessageBox.showwarning(title, text)
     return True
 
+@check_handle
 def confirm(text, title="Confirmation", confirm_type=YES_NO_CANCEL):
-    app.non_use()
     if confirm_type == YES_NO_CANCEL:
         return tkMessageBox.askyesnocancel(title, text)
     elif confirm_type == YES_NO:

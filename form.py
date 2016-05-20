@@ -1,18 +1,41 @@
-from Tkinter import Frame, BOTH
+from Tkinter import Tk, Toplevel, Frame, BOTH
 from control import Control, Rect
 
 SINGLE = 0
 TOOLWIN = 1
 
+def check_handle(func):
+    def call_with_check_handle(*args, **kwargs):
+        Form._check_handle()
+        return func(*args, **kwargs)
+
+    return call_with_check_handle
+
 class Form(Control):
+    _main_form = None
+
+    @staticmethod
+    def _check_handle():
+        if not Form._main_form:
+            tk = Tk()
+            tk.withdraw()
+    
     def __init__(self, caption="Untitled", width=600, height=400, parent=None):
         super(self.__class__, self).__init__()
-        self._frame = Frame(self._tk_ref(parent))
+        if not Form._main_form:
+            Form._main_form = self
+            master = Tk()
+        else:
+            master = Toplevel()
+
+        self._ctrl = master
+        self._frame = Frame(master)
         self._frame.pack(fill=BOTH, expand=1)
-        self._ctrl = self._frame.master
+
         self.set_caption(caption)
         self.set_width(width)
         self.set_height(height)
+        self._icon = None
 
     def _geometry(self):
         (size, x, y) = self._ctrl.geometry().split('+')
@@ -69,6 +92,13 @@ class Form(Control):
         if value not in [SINGLE, TOOLWIN]:
             raise Exception('Invalid form type')
         self._ctrl.attributes('-toolwindow', value)
+
+    def get_icon(self):
+        return self._icon
+
+    def set_icon(self, value):
+        self._icon = value
+        self._ctrl.wm_iconbitmap(value)
         
     def show(self):
         self._frame.mainloop()
@@ -80,3 +110,4 @@ class Form(Control):
     caption = property(get_caption, set_caption)
     resizable = property(get_resizable, set_resizable)
     form_type = property(get_form_type, set_form_type)
+    icon = property(get_icon, set_icon)

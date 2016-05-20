@@ -1,4 +1,5 @@
 from application import app
+import messagebox
 from form import Form, TOOLWIN, SINGLE
 from button import Button
 from label import Label
@@ -8,7 +9,8 @@ from edit import Edit
 
 def cool():
     global f
-    f1 = Form("New Form", 320, 200, app)
+    messagebox.show('hello world')
+    f1 = Form("New Form", 320, 200)
     f1.show()
     print "I'm a cool app"
 
