@@ -71,7 +71,7 @@ class Form(Control):
 
     @width.setter
     def width(self, value):
-        self._ctrl.geometry("{}x{}".format(value, self.get_height()))
+        self._ctrl.geometry("{}x{}".format(value, self.height))
         self._ctrl.update_idletasks()
 
     @property
@@ -80,7 +80,7 @@ class Form(Control):
 
     @left.setter
     def left(self, value):
-        self._ctrl.geometry("+{}+{}".format(value, self.get_top()))
+        self._ctrl.geometry("+{}+{}".format(value, self.top))
         self._ctrl.update_idletasks()
 
     @property
@@ -89,7 +89,7 @@ class Form(Control):
 
     @top.setter
     def top(self, value):
-        self._ctrl.geometry("+{}+{}".format(self.get_left(), value))
+        self._ctrl.geometry("+{}+{}".format(self.left, value))
         self._ctrl.update_idletasks()
 
     @property
@@ -98,7 +98,7 @@ class Form(Control):
 
     @height.setter
     def height(self, value):
-        self._ctrl.geometry("{}x{}".format(self.get_width(), value))
+        self._ctrl.geometry("{}x{}".format(self.width, value))
         self._ctrl.update_idletasks()
 
     @property
