@@ -13,6 +13,7 @@ def check_handle(func):
 
 class Form(Control):
     _main_form = None
+    _active_forms = []
 
     @staticmethod
     def _check_handle():
@@ -27,6 +28,7 @@ class Form(Control):
             master = Tk()
         else:
             master = Toplevel()
+            master.withdraw()
 
         self._ctrl = master
         self._frame = Frame(master)
@@ -36,6 +38,18 @@ class Form(Control):
         self.set_width(width)
         self.set_height(height)
         self._icon = None
+        self._ctrl.protocol("WM_DELETE_WINDOW", self.on_close)
+        self._add_to_active_list()
+
+    def on_close(self):
+        self._remove_from_active_list()
+        self._ctrl.destroy()
+
+    def _add_to_active_list(self):
+        Form._active_forms.append(self)
+
+    def _remove_from_active_list(self):
+        Form._active_forms.remove(self)
 
     def _geometry(self):
         (size, x, y) = self._ctrl.geometry().split('+')
@@ -101,7 +115,23 @@ class Form(Control):
         self._ctrl.wm_iconbitmap(value)
         
     def show(self):
-        self._frame.mainloop()
+        if self == Form._main_form:
+            self._frame.mainloop()
+        else:
+            self._ctrl.update()
+            self._ctrl.deiconify()
+
+    def hide(self):
+        self._ctrl.withdraw()
+
+    def show_modal(self):
+        self.show()
+        if self == Form._main_form:
+            return
+        self._ctrl.grab_set()
+        for form in Form._active_forms:
+            if form != self:
+                form._ctrl.wait_window(self._ctrl)
 
     left = property(get_left, set_left)
     top = property(get_top, set_top)

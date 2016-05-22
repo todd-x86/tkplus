@@ -7,11 +7,16 @@ from paintbox import PaintBox
 from image import Image
 from edit import Edit
 
+def cool2():
+    print "GREETZ"
+
 def cool():
     global f
     messagebox.show('hello world')
     f1 = Form("New Form", 320, 200)
-    f1.show()
+    btn1 = Button(f1, 'Hello', 5, 5, 200, 100)
+    btn1.on_click = cool2
+    f1.show_modal()
     print "I'm a cool app"
 
 if __name__ == '__main__':

@@ -10,6 +10,13 @@ class Button(Control):
         self.top = top
         self.width = width
         self.height = height
+        self._control_set('command', self._on_click_handler)
+
+    def _on_click_handler(self):
+        self.on_click()
+
+    def on_click(self):
+        pass
 
     def get_caption(self):
         return self._control_get('text')
@@ -17,11 +24,4 @@ class Button(Control):
     def set_caption(self, value):
         self._control_set('text', value)
 
-    def get_on_click(self):
-        return self._control_get('command')
-
-    def set_on_click(self, callback):
-        self._control_set('command', callback)
-
     caption = property(get_caption, set_caption)
-    on_click = property(get_on_click, set_on_click)
