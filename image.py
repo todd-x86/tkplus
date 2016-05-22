@@ -15,20 +15,19 @@ class Picture(object):
             return
         self._hnd.configure(image=self._img)
 
-    def get_width(self):
+    @property
+    def width(self):
         if not self._img:
             return None
         else:
             return self._img.width()
 
-    def get_height(self):
+    @property
+    def height(self):
         if not self._img:
             return None
         else:
             return self._img.height()
-
-    width = property(get_width)
-    height = property(get_height)
 
 class Image(Control):
     def __init__(self, parent, left, top, width, height, data):
@@ -41,7 +40,6 @@ class Image(Control):
         self._picture = Picture(self._ctrl)
         self._picture.open_file(data)
 
-    def get_picture(self):
+    @property
+    def picture(self):
         return self._picture
-
-    picture = property(get_picture)

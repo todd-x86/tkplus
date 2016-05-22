@@ -11,10 +11,10 @@ class Label(Control):
         self.width = width
         self.height = height
 
-    def get_caption(self):
+    @property
+    def caption(self):
         return self._control_get('text')
 
-    def set_caption(self, value):
+    @caption.setter
+    def caption(self, value):
         self._control_set('text', value)
-
-    caption = property(get_caption, set_caption)

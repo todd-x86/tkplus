@@ -11,10 +11,10 @@ class Edit(Control):
         self.width = width
         self.height = height
 
-    def get_text(self):
+    @property
+    def text(self):
         return self._text.get()
 
-    def set_text(self, value):
+    @text.setter
+    def text(self, value):
         self._text.set(value)
-
-    text = property(get_text, set_text)

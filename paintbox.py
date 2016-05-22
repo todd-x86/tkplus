@@ -40,11 +40,10 @@ class PaintBox(Control):
             kwargs = {'data': image}
         self._ctrl.create_image(x1, y1, **kwargs)
 
-    def get_pen(self):
+    @property
+    def pen(self):
         return self._pen
 
-    def get_brush(self):
+    @property
+    def brush(self):
         return self._brush
-
-    pen = property(get_pen)
-    brush = property(get_brush)

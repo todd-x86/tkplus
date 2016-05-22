@@ -34,14 +34,23 @@ class Form(Control):
         self._frame = Frame(master)
         self._frame.pack(fill=BOTH, expand=1)
 
-        self.set_caption(caption)
-        self.set_width(width)
-        self.set_height(height)
+        self.caption = caption
+        self.width = width
+        self.height = height
         self._icon = None
-        self._ctrl.protocol("WM_DELETE_WINDOW", self.on_close)
+        self._ctrl.protocol("WM_DELETE_WINDOW", self._on_close_handler)
         self._add_to_active_list()
 
+    def on_close_query(self):
+        return True
+
     def on_close(self):
+        pass
+
+    def _on_close_handler(self):
+        if not self.on_close_query():
+            return
+        self.on_close()
         self._remove_from_active_list()
         self._ctrl.destroy()
 
@@ -56,61 +65,77 @@ class Form(Control):
         (width, height) = size.split('x')
         return Rect(*map(int, [x, y, width, height]))
 
-    def get_width(self):
+    @property
+    def width(self):
         return self._geometry().width
 
-    def set_width(self, value):
+    @width.setter
+    def width(self, value):
         self._ctrl.geometry("{}x{}".format(value, self.get_height()))
         self._ctrl.update_idletasks()
 
-    def get_left(self):
+    @property
+    def left(self):
         return self._geometry().left
 
-    def set_left(self, value):
+    @left.setter
+    def left(self, value):
         self._ctrl.geometry("+{}+{}".format(value, self.get_top()))
         self._ctrl.update_idletasks()
 
-    def get_top(self):
+    @property
+    def top(self):
         return self._geometry().top
 
-    def set_top(self, value):
+    @top.setter
+    def top(self, value):
         self._ctrl.geometry("+{}+{}".format(self.get_left(), value))
         self._ctrl.update_idletasks()
 
-    def get_height(self):
+    @property
+    def height(self):
         return self._geometry().height
 
-    def set_height(self, value):
+    @height.setter
+    def height(self, value):
         self._ctrl.geometry("{}x{}".format(self.get_width(), value))
         self._ctrl.update_idletasks()
 
-    def get_caption(self):
+    @property
+    def caption(self):
         return self._ctrl.title()
 
-    def set_caption(self, value):
+    @caption.setter
+    def caption(self, value):
         self._ctrl.title(value)
 
-    def get_resizable(self):
+    @property
+    def resizable(self):
         return self._ctrl.resizable() != '0 0'
 
-    def set_resizable(self, value):
+    @resizable.setter
+    def resizable(self, value):
         if not isinstance(value, bool):
             raise Exception('resizable value must be a bool')
         self._ctrl.resizable(int(value),int(value))
         self._ctrl.update_idletasks()
 
-    def get_form_type(self):
+    @property
+    def form_type(self):
         return int(self._ctrl.attributes('-toolwindow'))
 
-    def set_form_type(self, value):
+    @form_type.setter
+    def form_type(self, value):
         if value not in [SINGLE, TOOLWIN]:
             raise Exception('Invalid form type')
         self._ctrl.attributes('-toolwindow', value)
 
-    def get_icon(self):
+    @property
+    def icon(self):
         return self._icon
 
-    def set_icon(self, value):
+    @icon.setter
+    def icon(self, value):
         self._icon = value
         self._ctrl.wm_iconbitmap(value)
         
@@ -132,12 +157,3 @@ class Form(Control):
         for form in Form._active_forms:
             if form != self:
                 form._ctrl.wait_window(self._ctrl)
-
-    left = property(get_left, set_left)
-    top = property(get_top, set_top)
-    width = property(get_width, set_width)
-    height = property(get_height, set_height)
-    caption = property(get_caption, set_caption)
-    resizable = property(get_resizable, set_resizable)
-    form_type = property(get_form_type, set_form_type)
-    icon = property(get_icon, set_icon)
