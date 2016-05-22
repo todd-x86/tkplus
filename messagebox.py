@@ -1,5 +1,5 @@
 import tkMessageBox
-from form import Form, check_handle
+from form import check_handle
 YES_NO_CANCEL = 0
 YES_NO = 1
 OK_CANCEL = 2

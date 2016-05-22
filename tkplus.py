@@ -24,11 +24,13 @@ if __name__ == '__main__':
     f.caption = "Greetings"
     f.resizable = True
     f.form_type = SINGLE
+
+    img = Image(f, 0, 0, 400, 400, 'how_internet1.gif')
     
-    b = Button(f, "Click Me", 55, 55, 120, 35)
+    b = Button(f, "Click Me", 55, 255, 120, 35)
     b.on_click = cool
 
-    lbl1 = Label(f, "Some text", 100, 5, 100, 30)
+    lbl1 = Label(f, "Some text", 15, 45, 100, 30)
 
     pbox = PaintBox(f, 175, 5, 100, 100)
     pbox.pen.color = 'red'
@@ -37,9 +39,9 @@ if __name__ == '__main__':
     pbox.brush.color = 'blue'
     pbox.arc(15, 15, 65, 65, 0, 45)
 
-    img = Image(f, 275, 5, 200, 200, 'how_internet1.gif')
 
-    e1 = Edit(f, 5, 55, 120, 30)
+
+    e1 = Edit(f, 5, 155, 120, 30)
     e1.text = "enter some crap here"
     
     app.run(f, 15, 15)

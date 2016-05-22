@@ -39,8 +39,8 @@ class Form(Control):
         self.height = height
         self._icon = None
         self._ctrl.protocol("WM_DELETE_WINDOW", self._on_close_handler)
-        self._add_to_active_list()
-
+        Form._active_forms.append(self)
+        
     def on_close_query(self):
         return True
 
@@ -51,14 +51,8 @@ class Form(Control):
         if not self.on_close_query():
             return
         self.on_close()
-        self._remove_from_active_list()
-        self._ctrl.destroy()
-
-    def _add_to_active_list(self):
-        Form._active_forms.append(self)
-
-    def _remove_from_active_list(self):
         Form._active_forms.remove(self)
+        self._ctrl.destroy()
 
     def _geometry(self):
         (size, x, y) = self._ctrl.geometry().split('+')
