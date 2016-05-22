@@ -28,7 +28,7 @@ class Form(Control):
             master = Tk()
         else:
             master = Toplevel()
-            master.withdraw()
+        master.withdraw()
 
         self._ctrl = master
         self._frame = Frame(master)
@@ -133,12 +133,11 @@ class Form(Control):
         self._icon = value
         self._ctrl.wm_iconbitmap(value)
         
-    def show(self):
+    def show(self):    
+        self._ctrl.update()
+        self._ctrl.deiconify()
         if self == Form._main_form:
             self._frame.mainloop()
-        else:
-            self._ctrl.update()
-            self._ctrl.deiconify()
 
     def hide(self):
         self._ctrl.withdraw()

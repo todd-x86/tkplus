@@ -1,4 +1,3 @@
-from application import app
 import messagebox
 from form import Form, TOOLWIN, SINGLE
 from button import Button
@@ -43,5 +42,6 @@ if __name__ == '__main__':
 
     e1 = Edit(f, 5, 155, 120, 30)
     e1.text = "enter some crap here"
-    
-    app.run(f, 15, 15)
+
+    f.left, f.top = 0, 0
+    f.show()
