@@ -11,7 +11,7 @@ class Button(Control):
         self.width = width
         self.height = height
         self._control_set('command', lambda: self.on_click())
-
+        
     def on_click(self):
         pass
 
@@ -22,3 +22,23 @@ class Button(Control):
     @caption.setter
     def caption(self, value):
         self._control_set('text', value)
+
+    def flash(self):
+        self._ctrl.flash()
+
+    @property
+    def background(self):
+        return self._control_get('background')
+
+    @background.setter
+    def background(self, value):
+        self._control_set('background', value)
+        self._control_set('activebackground', value)
+
+    @property
+    def default(self):
+        return self._control_get('default') == 'active'
+
+    @default.setter
+    def default(self, value):
+        self._control_set('default', 'active' if value else 'normal')

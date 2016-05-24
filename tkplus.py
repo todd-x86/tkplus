@@ -15,6 +15,7 @@ def cool():
     f1 = Form("New Form", 320, 200)
     btn1 = Button(f1, 'Hello', 5, 5, 200, 100)
     btn1.on_click = cool2
+    btn1.background = 'blue'
     f1.show_modal()
     print "I'm a cool app"
 
@@ -28,6 +29,7 @@ if __name__ == '__main__':
     
     b = Button(f, "Click Me", 55, 255, 120, 35)
     b.on_click = cool
+    b.default = True
 
     lbl1 = Label(f, "Some text", 15, 45, 100, 30)
 

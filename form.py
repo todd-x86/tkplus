@@ -1,5 +1,6 @@
 from Tkinter import Tk, Toplevel, Frame, BOTH
 from control import Control, Rect
+import os
 
 SINGLE = 0
 TOOLWIN = 1
@@ -31,6 +32,7 @@ class Form(Control):
         master.withdraw()
 
         self._ctrl = master
+        
         self._frame = Frame(master)
         self._frame.pack(fill=BOTH, expand=1)
 
@@ -55,6 +57,7 @@ class Form(Control):
         self._ctrl.destroy()
 
     def _geometry(self):
+        self._ctrl.update_idletasks()
         (size, x, y) = self._ctrl.geometry().split('+')
         (width, height) = size.split('x')
         return Rect(*map(int, [x, y, width, height]))
@@ -116,10 +119,15 @@ class Form(Control):
 
     @property
     def form_type(self):
-        return int(self._ctrl.attributes('-toolwindow'))
+        if os.name == 'nt':
+            return int(self._ctrl.attributes('-toolwindow'))
+        else:
+            return SINGLE
 
     @form_type.setter
     def form_type(self, value):
+        if os.name != 'nt':
+            return
         if value not in [SINGLE, TOOLWIN]:
             raise Exception('Invalid form type')
         self._ctrl.attributes('-toolwindow', value)
