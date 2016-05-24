@@ -1,6 +1,9 @@
 from Tkinter import Tk, Toplevel, Frame, BOTH
 from control import Control, Rect
 import os
+import logging
+
+log = logging.getLogger(__name__)
 
 SINGLE = 0
 TOOLWIN = 1
@@ -57,7 +60,9 @@ class Form(Control):
         self._ctrl.destroy()
 
     def _geometry(self):
-        self._ctrl.update_idletasks()
+        log.debug('_geometry -- {}'.format(self._ctrl.geometry()))
+        if os.name != 'nt':
+            self._ctrl.update_idletasks()
         (size, x, y) = self._ctrl.geometry().split('+')
         (width, height) = size.split('x')
         return Rect(*map(int, [x, y, width, height]))

@@ -5,6 +5,13 @@ from label import Label
 from paintbox import PaintBox
 from image import Image
 from edit import Edit
+import logging
+
+
+FORMAT = '%(asctime)s - %(levelname)s: %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+
+log = logging.getLogger('tkplus-demo')
 
 def cool2():
     print "GREETZ"
@@ -20,6 +27,7 @@ def cool():
     print "I'm a cool app"
 
 if __name__ == '__main__':
+    log.debug('demo app starting')
     f = Form("Hello", 640, 480)
     f.caption = "Greetings"
     f.resizable = True
