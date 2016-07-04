@@ -2,14 +2,15 @@ from control import Control
 from Tkinter import Button as TkButton
 
 class Button(Control):
-    def __init__(self, parent, caption, left, top, width, height):
+    def __init__(self, parent, **kwargs):
         super(self.__class__, self).__init__()
         self._ctrl = TkButton(parent._frame)
-        self.caption = caption
-        self.left = left
-        self.top = top
-        self.width = width
-        self.height = height
+        self.caption = kwargs.get('caption')
+        self.left = kwargs['left']
+        self.top = kwargs['top']
+        self.width = kwargs['width']
+        self.height = kwargs['height']
+        # NOTE: This lets 'command' behave like a virtual method
         self._control_set('command', lambda: self.on_click())
         
     def on_click(self):

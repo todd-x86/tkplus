@@ -48,3 +48,29 @@ class Control(object):
     def height(self, value):
         self._ctrl.place(x=self.left, y=self.top, width=self.width, height=value)
         self._ctrl.update_idletasks()
+
+# Text Control descendent
+
+ALIGNMENT_LEFT = 'w'
+ALIGNMENT_RIGHT = 'e'
+ALIGNMENT_CENTER = 'center'
+
+class TextControl(Control):
+    def __init__(self):
+        Control.__init__(self)
+
+    @property
+    def caption(self):
+        return self._control_get('text')
+
+    @caption.setter
+    def caption(self, value):
+        self._control_set('text', value)
+
+    @property
+    def alignment(self):
+        return self._control_get('anchor')
+
+    @alignment.setter
+    def alignment(self, value):
+        self._control_set('anchor', value)

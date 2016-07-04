@@ -25,7 +25,7 @@ class Form(Control):
             tk = Tk()
             tk.withdraw()
     
-    def __init__(self, caption="Untitled", width=600, height=400, parent=None):
+    def __init__(self, **kwargs):
         super(self.__class__, self).__init__()
         if not Form._main_form:
             Form._main_form = self
@@ -39,9 +39,9 @@ class Form(Control):
         self._frame = Frame(master)
         self._frame.pack(fill=BOTH, expand=1)
 
-        self.caption = caption
-        self.width = width
-        self.height = height
+        self.caption = kwargs.get('caption', 'Untitled')
+        self.width = kwargs.get('width', 640)
+        self.height = kwargs.get('height', 480)
         self._icon = None
         self._ctrl.protocol("WM_DELETE_WINDOW", self._on_close_handler)
         Form._active_forms.append(self)

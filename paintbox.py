@@ -11,13 +11,13 @@ class Brush(object):
         self.color = None
 
 class PaintBox(Control):
-    def __init__(self, parent, left, top, width, height):
+    def __init__(self, parent, **kwargs):
         super(self.__class__, self).__init__()
         self._ctrl = Canvas(parent._frame)
-        self.left = left
-        self.top = top
-        self.width = width
-        self.height = height
+        self.left = kwargs['left']
+        self.top = kwargs['top']
+        self.width = kwargs['width']
+        self.height = kwargs['height']
         self._pen = Pen()
         self._brush = Brush()
 
