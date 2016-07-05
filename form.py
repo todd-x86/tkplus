@@ -155,6 +155,9 @@ class Form(Control):
     def hide(self):
         self._ctrl.withdraw()
 
+    def close(self):
+        self._on_close_handler()
+
     def show_modal(self):
         self.show()
         if self == Form._main_form:

@@ -1,9 +1,10 @@
 from control import Control
-from Tkinter import Button as TkButton
+from image import Picture
+from Tkinter import Button as TkButton, PhotoImage
 
 class Button(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
+        Control.__init__(self)
         self._ctrl = TkButton(parent._frame)
         self.caption = kwargs.get('caption')
         self.left = kwargs['left']
@@ -43,3 +44,15 @@ class Button(Control):
     @default.setter
     def default(self, value):
         self._control_set('default', 'active' if value else 'normal')
+
+class BitBtn(Button):
+    def __init__(self, parent, **kwargs):
+        Button.__init__(self, parent, **kwargs)
+        self._control_set('compound', 'left')
+        self._glyph = Picture(self._ctrl)
+        if kwargs.get('image'):
+            self.glyph.open_file(kwargs['image'])
+
+    @property
+    def glyph(self):
+        return self._glyph

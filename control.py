@@ -2,7 +2,7 @@ from collections import namedtuple
 
 Rect = namedtuple('Rect', ['left', 'top', 'width', 'height'])
 
-class Control(object):
+class BaseControl(object):
     def __init__(self):
         self._ctrl = None
 
@@ -12,6 +12,10 @@ class Control(object):
     def _control_set(self, key, value):
         set_args = {key: value}
         self._ctrl.config(**set_args)
+
+class Control(BaseControl):
+    def __init__(self):
+        BaseControl.__init__(self)
 
     @property
     def width(self):
