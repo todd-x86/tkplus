@@ -16,16 +16,14 @@ class MenuItem(object):
     def on_click(self):
         pass
 
-class Menu(BaseControl):
-    def __init__(self, menubar, title, **kwargs):
+class BaseMenu(BaseControl):
+    def __init__(self, parent_hnd, **kwargs):
         BaseControl.__init__(self)
-        self._mainmenu = menubar
-        self._ctrl = TkMenu(menubar._ctrl)
+        self._ctrl = TkMenu(parent_hnd)
         if kwargs.get('tearoff'):
             self.tearoff = kwargs['tearoff']
         else:
             self.tearoff = False
-        menubar._ctrl.add_cascade(label=title, menu=self._ctrl)
 
     @property
     def tearoff(self):
@@ -41,6 +39,12 @@ class Menu(BaseControl):
     def separator(self):
         self._ctrl.add_separator()
 
+class Menu(BaseMenu):
+    def __init__(self, menubar, title, **kwargs):
+        BaseMenu.__init__(self, menubar._ctrl, **kwargs)
+        self._mainmenu = menubar
+        menubar._ctrl.add_cascade(label=title, menu=self._ctrl)
+
 class MainMenu(BaseControl):
     def __init__(self, parent):
         BaseControl.__init__(self)
@@ -49,3 +53,13 @@ class MainMenu(BaseControl):
         
     def create(self, title, **kwargs):
         return Menu(self, title, **kwargs)
+
+class PopupMenu(BaseMenu):
+    def __init__(self, parent, **kwargs):
+        BaseMenu.__init__(self, parent._frame, **kwargs)
+
+    def popup(self, x, y):
+        try:
+            self._ctrl.tk_popup(x, y, 0)
+        finally:
+            self._ctrl.grab_release()

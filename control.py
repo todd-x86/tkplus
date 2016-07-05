@@ -16,6 +16,7 @@ class BaseControl(object):
 class Control(BaseControl):
     def __init__(self):
         BaseControl.__init__(self)
+        self._popup = None
 
     @property
     def width(self):
@@ -52,6 +53,18 @@ class Control(BaseControl):
     def height(self, value):
         self._ctrl.place(x=self.left, y=self.top, width=self.width, height=value)
         self._ctrl.update_idletasks()
+
+    @property
+    def popup_menu(self):
+        return self._popup
+
+    @popup_menu.setter
+    def popup_menu(self, value):
+        self._popup = value
+        self._ctrl.bind("<Button-3>", self._invoke_popup)
+
+    def _invoke_popup(self, event):
+        self._popup.popup(event.x_root, event.y_root)    
 
 # Text Control descendent
 

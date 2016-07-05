@@ -10,7 +10,8 @@ from checkbox import CheckBox
 from memo import Memo
 from scrollbar import ScrollBar, HORIZONTAL
 from panel import Panel
-from menu import MainMenu
+from menu import MainMenu, PopupMenu
+from progressbar import ProgressBar
 import logging
 import sys
 
@@ -105,7 +106,18 @@ if __name__ == '__main__':
     def close_notify():
         print "CLOSING"
 
+    popup1 = PopupMenu(f)
+    popup1.create("Click me", on_click=on_new)
+
+    p1 = ProgressBar(f, left=125, top=5, width=130, height=24)
+
+    def progress_done():
+        p1.step(50)
+
+    popup1.create("finish", on_click=progress_done)
+
     f.on_close = close_notify
+    f.popup_menu = popup1
 
     f.left, f.top = 0, 0
     f.show()
