@@ -3,13 +3,7 @@ from Tkinter import Label as TkLabel
 
 class Label(TextControl):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
-        self._ctrl = TkLabel(parent._frame)
-        self.caption = kwargs.get('caption')
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        TextControl.__init__(self, TkLabel(parent._frame), **kwargs)
         self.alignment = ALIGNMENT_LEFT
         self.wordwrap = False
 

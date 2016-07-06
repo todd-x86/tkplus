@@ -10,13 +10,7 @@ class RadioGroup(object):
 
 class RadioButton(TextControl):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
-        self._ctrl = TkRadio(parent._frame)
-        self.caption = kwargs.get('caption')
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        TextControl.__init__(self, TkRadio(parent._frame), **kwargs)
         self.group = kwargs.get('group', RadioGroup())
         self.alignment = ALIGNMENT_LEFT
 

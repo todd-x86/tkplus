@@ -31,14 +31,9 @@ class Picture(object):
 
 class Image(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
+        Control.__init__(self, Label(master=parent._frame), **kwargs)
         # Tk does not have a truly dedicated "Image" object
         # unless you install PIL
-        self._ctrl = Label(master=parent._frame)
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
         self._picture = Picture(self._ctrl)
         if kwargs.get('file'):
             self._picture.open_file(kwargs['file'])

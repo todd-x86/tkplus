@@ -6,12 +6,7 @@ VERTICAL = 'vertical'
 
 class ScrollBar(Control):
     def __init__(self, parent, **kwargs):
-        Control.__init__(self)
-        self._ctrl = TkScrollbar(parent._frame)
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        Control.__init__(self, TkScrollbar(parent._frame), **kwargs)
         self._ctrl.set(0, 1)
         self._control_set('command', lambda *args: self._scroll(*args))
         self._min = 0

@@ -12,6 +12,7 @@ from scrollbar import ScrollBar, HORIZONTAL
 from panel import Panel
 from menu import MainMenu, PopupMenu
 from progressbar import ProgressBar
+from slider import Slider
 import logging
 import sys
 
@@ -115,6 +116,8 @@ if __name__ == '__main__':
         p1.step(50)
 
     popup1.create("finish", on_click=progress_done)
+
+    sl1 = Slider(f, left=25, top=100, width=150, height=90)
 
     f.on_close = close_notify
     f.popup_menu = popup1

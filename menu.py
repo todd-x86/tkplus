@@ -18,8 +18,7 @@ class MenuItem(object):
 
 class BaseMenu(BaseControl):
     def __init__(self, parent_hnd, **kwargs):
-        BaseControl.__init__(self)
-        self._ctrl = TkMenu(parent_hnd)
+        BaseControl.__init__(self, TkMenu(parent_hnd))
         if kwargs.get('tearoff'):
             self.tearoff = kwargs['tearoff']
         else:
@@ -47,8 +46,7 @@ class Menu(BaseMenu):
 
 class MainMenu(BaseControl):
     def __init__(self, parent):
-        BaseControl.__init__(self)
-        self._ctrl = TkMenu(parent._frame)
+        BaseControl.__init__(self, TkMenu(parent._frame))
         parent._control_set('menu', self._ctrl)
         
     def create(self, title, **kwargs):

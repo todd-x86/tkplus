@@ -12,12 +12,7 @@ class Brush(object):
 
 class PaintBox(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
-        self._ctrl = Canvas(parent._frame)
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        Control.__init__(self, Canvas(parent._frame), **kwargs)
         self._pen = Pen()
         self._brush = Brush()
 

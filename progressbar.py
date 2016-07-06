@@ -3,12 +3,7 @@ from ttk import Progressbar as TkProgressBar
 
 class ProgressBar(Control):
     def __init__(self, parent, **kwargs):
-        Control.__init__(self)
-        self._ctrl = TkProgressBar()
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        Control.__init__(self, TkProgressBar(), **kwargs)
 
         self._min = 0
         self._max = 0

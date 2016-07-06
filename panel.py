@@ -8,13 +8,8 @@ BORDER_NONE = 'flat'
 
 class Panel(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
-        self._ctrl = TkFrame(parent._frame)
+        Control.__init__(self, TkFrame(parent._frame), **kwargs)
         self._frame = self._ctrl
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
         self.border_width = 1
         self.border_style = BORDER_SINGLE
 

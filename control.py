@@ -3,8 +3,8 @@ from collections import namedtuple
 Rect = namedtuple('Rect', ['left', 'top', 'width', 'height'])
 
 class BaseControl(object):
-    def __init__(self):
-        self._ctrl = None
+    def __init__(self, ctrl=None):
+        self._ctrl = ctrl
 
     def _control_get(self, key):
         return self._ctrl.config().get(key)
@@ -14,9 +14,17 @@ class BaseControl(object):
         self._ctrl.config(**set_args)
 
 class Control(BaseControl):
-    def __init__(self):
-        BaseControl.__init__(self)
+    def __init__(self, ctrl=None, **kwargs):
+        BaseControl.__init__(self, ctrl)
+        if ctrl:
+            self._place(kwargs)
         self._popup = None
+
+    def _place(self, kwargs):
+        self.left = kwargs['left']
+        self.top = kwargs['top']
+        self.width = kwargs['width']
+        self.height = kwargs['height']
 
     @property
     def width(self):
@@ -73,8 +81,9 @@ ALIGNMENT_RIGHT = 'e'
 ALIGNMENT_CENTER = 'center'
 
 class TextControl(Control):
-    def __init__(self):
-        Control.__init__(self)
+    def __init__(self, ctrl, **kwargs):
+        Control.__init__(self, ctrl, **kwargs)
+        self.caption = kwargs.get('caption')
 
     @property
     def caption(self):

@@ -3,12 +3,7 @@ from Tkinter import Text, END
 
 class Memo(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
-        self._ctrl = Text(master=parent._frame)
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        Control.__init__(self, Text(master=parent._frame), **kwargs)
         if kwargs.get('text'):
             self._ctrl.insert(END, kwargs['text'])
 

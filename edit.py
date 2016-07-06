@@ -3,13 +3,9 @@ from control import Control
 
 class Edit(Control):
     def __init__(self, parent, **kwargs):
-        super(self.__class__, self).__init__()
+        Control.__init__(self, Entry(master=parent._frame), **kwargs)
         self._text = StringVar()
-        self._ctrl = Entry(master=parent._frame, textvariable=self._text)
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
+        self._control_set('textvariable', self._text)
 
     @property
     def text(self):

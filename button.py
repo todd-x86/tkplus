@@ -4,13 +4,8 @@ from Tkinter import Button as TkButton, PhotoImage
 
 class Button(Control):
     def __init__(self, parent, **kwargs):
-        Control.__init__(self)
-        self._ctrl = TkButton(parent._frame)
+        Control.__init__(self, TkButton(parent._frame), **kwargs)
         self.caption = kwargs.get('caption')
-        self.left = kwargs['left']
-        self.top = kwargs['top']
-        self.width = kwargs['width']
-        self.height = kwargs['height']
         # NOTE: This lets 'command' behave like a virtual method
         self._control_set('command', lambda: self.on_click())
         
