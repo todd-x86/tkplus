@@ -1,6 +1,6 @@
 from control import Control
 from image import Picture
-from Tkinter import Button as TkButton, PhotoImage
+from Tkinter import Button as TkButton, Spinbox as TkSpinBox, PhotoImage, END
 
 class Button(Control):
     def __init__(self, parent, **kwargs):
@@ -51,3 +51,51 @@ class BitBtn(Button):
     @property
     def glyph(self):
         return self._glyph
+
+class SpinButton(Control):
+    def __init__(self, parent, **kwargs):
+        Control.__init__(self, TkSpinBox(parent._frame), **kwargs)
+        self.min = 0
+        self.max = 100
+        self.value = 0
+
+    @property
+    def min(self):
+        return self._control_get('from')
+
+    @min.setter
+    def min(self, value):
+        self._control_set('from', value)
+
+    @property
+    def max(self):
+        return self._control_get('to')
+
+    @max.setter
+    def max(self, value):
+        self._control_set('to', value)
+
+    @property
+    def value(self):
+        return self._ctrl.get()
+
+    @value.setter
+    def value(self, value):
+        self._ctrl.delete(0, END)
+        self._ctrl.insert(END, value)
+
+    @property
+    def increment(self):
+        return self._control_get('increment')
+
+    @increment.setter
+    def increment(self, value):
+        return self._control_set('increment', value)
+
+    @property
+    def values(self):
+        return self._control_get('values')
+
+    @values.setter
+    def values(self, value):
+        return self._control_set('values', value)

@@ -72,7 +72,8 @@ class Control(BaseControl):
         self._ctrl.bind("<Button-3>", self._invoke_popup)
 
     def _invoke_popup(self, event):
-        self._popup.popup(event.x_root, event.y_root)    
+        self._popup.popup(event.x_root, event.y_root)
+        return 'break'
 
 # Text Control descendent
 

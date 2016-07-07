@@ -1,6 +1,6 @@
 import messagebox
 from form import Form, TOOLWIN, SINGLE
-from button import Button, BitBtn
+from button import Button, BitBtn, SpinButton
 from label import Label
 from paintbox import PaintBox
 from image import Image
@@ -13,6 +13,7 @@ from panel import Panel
 from menu import MainMenu, PopupMenu
 from progressbar import ProgressBar
 from slider import Slider
+from listbox import ListBox
 import logging
 import sys
 
@@ -110,14 +111,31 @@ if __name__ == '__main__':
     popup1 = PopupMenu(f)
     popup1.create("Click me", on_click=on_new)
 
-    p1 = ProgressBar(f, left=125, top=5, width=130, height=24)
+    popup2 = PopupMenu(f)
 
-    def progress_done():
-        p1.step(50)
+    #p1 = ProgressBar(f, left=125, top=5, width=130, height=24)
 
-    popup1.create("finish", on_click=progress_done)
+    #def progress_done():
+    #    p1.step(50)
 
-    sl1 = Slider(f, left=25, top=100, width=150, height=90)
+    #popup1.create("finish", on_click=progress_done)
+
+    #sl1 = Slider(f, left=25, top=100, width=150, height=90)
+
+    #sb1 = SpinButton(f, left=25, top=200, width=70, height=30)
+    #sb1.value = 40
+
+    lb = ListBox(f, left=5, top=5, width=300, height=300)
+    lb.items.add('foo')
+    lb.items.add('bar')
+    lb.items.add('fizz')
+    lb.items.add('buzz')
+    lb.popup_menu = popup2
+
+    def delete_lb_item():
+        lb.items.delete(lb.items.selected_keys[0])
+
+    popup2.create('Delete', on_click=delete_lb_item)
 
     f.on_close = close_notify
     f.popup_menu = popup1

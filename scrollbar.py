@@ -24,7 +24,7 @@ class ScrollBar(Control):
             if self.min <= self.value+delta <= self.max:
                 self.value += delta
 
-    def on_scroll(self, value, delta):
+    def on_scroll(self, value, delta, *extras):
         pass
     
     @property
