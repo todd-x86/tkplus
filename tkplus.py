@@ -14,6 +14,8 @@ from menu import MainMenu, PopupMenu
 from progressbar import ProgressBar
 from slider import Slider
 from listbox import ListBox
+from combobox import ComboBox
+from statusbar import StatusBar
 import logging
 import sys
 
@@ -125,20 +127,32 @@ if __name__ == '__main__':
     #sb1 = SpinButton(f, left=25, top=200, width=70, height=30)
     #sb1.value = 40
 
-    lb = ListBox(f, left=5, top=5, width=300, height=300)
-    lb.items.add('foo')
-    lb.items.add('bar')
-    lb.items.add('fizz')
-    lb.items.add('buzz')
-    lb.popup_menu = popup2
+    #lb = ListBox(f, left=5, top=5, width=300, height=300)
+    #lb.items.add('foo')
+    #lb.items.add('bar')
+    #lb.items.add('fizz')
+    #lb.items.add('buzz')
+    #lb.popup_menu = popup2
 
-    def delete_lb_item():
-        lb.items.delete(lb.items.selected_keys[0])
+    #def delete_lb_item():
+    #    lb.items.delete(lb.items.selected_keys[0])
 
-    popup2.create('Delete', on_click=delete_lb_item)
+    #popup2.create('Delete', on_click=delete_lb_item)
+
+    cb1 = ComboBox(f, left=5, top=5, width=140, height=40)
+    for j in range(10):
+        cb1.items.add('foo')
+        cb1.items.add('bar')
+        cb1.items.add('fizz')
+        cb1.items.add('buzz')
 
     f.on_close = close_notify
+    def combo_sel():
+        messagebox.show(cb1.readonly)
+    popup1.create('combo selection?', on_click=combo_sel)
     f.popup_menu = popup1
+
+    sb = StatusBar(f)
 
     f.left, f.top = 0, 0
     f.show()

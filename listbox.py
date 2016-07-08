@@ -44,6 +44,10 @@ class ListItems(object):
         return self._list._ctrl.size()
 
     @property
+    def selected_count(self):
+        return len(self._list._ctrl.curselection())
+
+    @property
     def selected_keys(self):
         return map(int, self._list._ctrl.curselection())
 
@@ -172,4 +176,3 @@ class ListBox(Panel):
     @popup_menu.setter
     def popup_menu(self, value):
         self._listbox.popup_menu = value
-        #self._ctrl.bind("<Button-3>", self._invoke_popup)
