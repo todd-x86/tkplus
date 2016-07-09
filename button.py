@@ -10,15 +10,30 @@ class Button(Control):
         self._control_set('command', lambda: self.on_click())
         
     def on_click(self):
-        pass
+        pass    
 
     @property
     def caption(self):
-        return self._control_get('text')
+        return self._raw_caption
 
     @caption.setter
     def caption(self, value):
-        self._control_set('text', value)
+        self._raw_caption = value
+        amp_pos = -1
+
+        # Sets the text and underline character (using '&' convention like in Windows)
+        j = 0
+        value_processed = ''
+        while j < len(value):
+            if value[j] == '&':
+                j += 1
+                if j < len(value) and value[j] != '&':
+                    amp_pos = len(value_processed)
+            value_processed += value[j]
+            j += 1
+        
+        self._control_set('text', value_processed)
+        self._control_set('underline', amp_pos)
 
     def flash(self):
         self._ctrl.flash()

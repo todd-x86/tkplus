@@ -27,6 +27,19 @@ class Control(BaseControl):
         self.height = kwargs['height']
 
     @property
+    def enabled(self):
+        return self._control_get('state') != 'disabled'
+
+    @enabled.setter
+    def enabled(self, value):
+        if self.enabled == value:
+            return
+        elif value:
+            self._control_set('normal')
+        else:
+            self._control_set('disabled')
+
+    @property
     def width(self):
         return self._ctrl.winfo_width()
 
