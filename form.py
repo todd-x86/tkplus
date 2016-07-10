@@ -39,6 +39,8 @@ class Form(Control):
         self._frame = Frame(master)
         self._frame.pack(fill=BOTH, expand=1)
 
+        self._hidden_width = 0
+        self._hidden_height = 0
         self.caption = kwargs.get('caption', 'Untitled')
         self.width = kwargs.get('width', 640)
         self.height = kwargs.get('height', 480)
@@ -69,10 +71,14 @@ class Form(Control):
 
     @property
     def width(self):
-        return self._geometry().width
+        if self.visible:
+            return self._geometry().width
+        else:
+            return self._hidden_width
 
     @width.setter
     def width(self, value):
+        self._hidden_width = value
         self._ctrl.geometry("{}x{}".format(value, self.height))
         self._ctrl.update_idletasks()
 
@@ -96,10 +102,14 @@ class Form(Control):
 
     @property
     def height(self):
-        return self._geometry().height
+        if self.visible:
+            return self._geometry().height
+        else:
+            return self._hidden_height
 
     @height.setter
     def height(self, value):
+        self._hidden_height = value
         self._ctrl.geometry("{}x{}".format(self.width, value))
         self._ctrl.update_idletasks()
 
@@ -145,6 +155,19 @@ class Form(Control):
     def icon(self, value):
         self._icon = value
         self._ctrl.wm_iconbitmap(value)
+
+    @property
+    def visible(self):
+        return self._ctrl.state() != 'withdrawn'
+
+    @visible.setter
+    def visible(self, value):
+        if self.visible == value:
+            return
+        elif value:
+            self.show()
+        else:
+            self.hide()
         
     def show(self):    
         self._ctrl.update()

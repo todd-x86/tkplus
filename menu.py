@@ -16,6 +16,12 @@ class MenuItem(object):
     def on_click(self):
         pass
 
+    def __exit__(self, *args):
+        pass
+
+    def __enter__(self, *args):
+        return self
+
 class BaseMenu(BaseControl):
     def __init__(self, parent_hnd, **kwargs):
         BaseControl.__init__(self, TkMenu(parent_hnd))
@@ -43,6 +49,12 @@ class Menu(BaseMenu):
         BaseMenu.__init__(self, menubar._ctrl, **kwargs)
         self._mainmenu = menubar
         menubar._ctrl.add_cascade(label=title, menu=self._ctrl)
+
+    def __exit__(self, *args):
+        pass
+
+    def __enter__(self, *args):
+        return self
 
 class MainMenu(BaseControl):
     def __init__(self, parent):

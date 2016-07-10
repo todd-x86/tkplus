@@ -82,7 +82,10 @@ class Control(BaseControl):
     @popup_menu.setter
     def popup_menu(self, value):
         self._popup = value
-        self._ctrl.bind("<Button-3>", self._invoke_popup)
+        if not value:
+            self._ctrl.bind("<Button-3>", lambda x: "break")
+        else:
+            self._ctrl.bind("<Button-3>", self._invoke_popup)
 
     def _invoke_popup(self, event):
         self._popup.popup(event.x_root, event.y_root)

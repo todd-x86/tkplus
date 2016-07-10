@@ -16,6 +16,7 @@ from slider import Slider
 from listbox import ListBox
 from combobox import ComboBox
 from statusbar import StatusBar
+from listview import ListView
 import logging
 import sys
 
@@ -48,9 +49,12 @@ if __name__ == '__main__':
     #img = Image(f, left=0, top=0, width=400, height=400, file='ok.gif')
     #img2 = Image(f, left=20, top=20, width=30, height=30, file='ok.gif')
     
-    #b = BitBtn(f, caption="Click Me", left=0, top=0, width=120, height=35, image='ok.gif')
-    #b.on_click = cool
-    #b.default = True
+    b = Button(f, caption="&Click Me", left=0, top=0, width=120, height=35)
+    b.on_click = cool
+    b.default = True
+
+    b2 = Button(f, caption="Click &Me 2", left=0, top=40, width=120, height=35)
+    #b2.default = True
 
     #lbl1 = Label(f, caption="Some text", left=15, top=45, width=100, height=30)
 
@@ -139,18 +143,35 @@ if __name__ == '__main__':
 
     #popup2.create('Delete', on_click=delete_lb_item)
 
-    cb1 = ComboBox(f, left=5, top=5, width=140, height=40)
-    for j in range(10):
-        cb1.items.add('foo')
-        cb1.items.add('bar')
-        cb1.items.add('fizz')
-        cb1.items.add('buzz')
+    #cb1 = ComboBox(f, left=5, top=5, width=140, height=40)
+    #for j in range(10):
+    #    cb1.items.add('foo')
+    #    cb1.items.add('bar')
+    #    cb1.items.add('fizz')
+    #    cb1.items.add('buzz')
 
     f.on_close = close_notify
-    def combo_sel():
-        messagebox.show(cb1.readonly)
-    popup1.create('combo selection?', on_click=combo_sel)
+    #def combo_sel():
+    #    messagebox.show(cb1.readonly)
+    #popup1.create('combo selection?', on_click=combo_sel)
     f.popup_menu = popup1
+
+    lv1 = ListView(f, top=80, left=5, width=600, height=300)
+    lv1.columns.add('First Name')
+    lv1.columns.add('Last Name')
+    lv1.columns.add('Age')
+
+    for j in range(10):
+        item = lv1.items.add('Todd')
+        item.subitems.add('Suess')
+
+    lv1.items[0].text = 'Toddulus'
+
+    def add_col():
+        lv1.columns.add('Time')
+    b2.on_click = add_col
+
+    f.icon = 'notepad.ico'
 
     sb = StatusBar(f)
 
