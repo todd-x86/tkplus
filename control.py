@@ -16,6 +16,7 @@ class BaseControl(object):
 class Control(BaseControl):
     def __init__(self, ctrl=None, **kwargs):
         BaseControl.__init__(self, ctrl)
+        self._visible = False
         if ctrl:
             self._place(kwargs)
         self._popup = None
@@ -25,6 +26,7 @@ class Control(BaseControl):
         self.top = kwargs['top']
         self.width = kwargs['width']
         self.height = kwargs['height']
+        self._visible = True
 
     @property
     def enabled(self):
@@ -90,6 +92,33 @@ class Control(BaseControl):
     def _invoke_popup(self, event):
         self._popup.popup(event.x_root, event.y_root)
         return 'break'
+
+    @property
+    def visible(self):
+        return self._visible
+
+    @visible.setter
+    def visible(self, value):
+        if self.visible == value:
+            return
+        elif value:
+            self.show()
+        else:
+            self.hide()
+
+    def on_show(self):
+        pass
+
+    def hide(self):
+        self._ctrl.place_forget()
+
+    def show(self):
+        self.on_show()
+        self._ctrl.place(x=self.left, y=self.top, width=self.width, height=self.height)
+        self._ctrl.update_idletasks()
+
+    def refresh(self):
+        self._ctrl.update_idletasks()
 
 # Text Control descendent
 

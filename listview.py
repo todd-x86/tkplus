@@ -1,4 +1,5 @@
 from control import Control
+from containers import ScrollContainer
 from ttk import Treeview as TkTreeView
 
 class ListViewColumn(object):
@@ -132,6 +133,9 @@ class ListViewItem(object):
     def subitems(self):
         return self._strings
 
+    def delete(self):
+        self._listview._ctrl.delete(self._iid)
+
 class ListViewItems(object):
     def __init__(self, listview):
         self._listview = listview
@@ -150,6 +154,7 @@ class ListViewItems(object):
         return len(self._items)
 
     def delete(self, index):
+        self._items[index].delete()
         self._items.delete(index)
 
     def insert(self, index, value):
@@ -157,7 +162,7 @@ class ListViewItems(object):
         self._items.insert(index, row)
         return row
 
-class ListView(Control):
+class BaseListView(Control):
     def __init__(self, parent, **kwargs):
         Control.__init__(self, TkTreeView(parent._frame), **kwargs)
         self._columns = ListViewColumns(self)
@@ -170,3 +175,20 @@ class ListView(Control):
     @property
     def items(self):
         return self._items
+
+from pprint import pprint
+
+class ListView(ScrollContainer):
+    def __init__(self, parent, **kwargs):
+        ScrollContainer.__init__(self, parent, **kwargs)
+        self._init_container(BaseListView(self, **kwargs))
+        # TODO: fix scrollbar issue with ListView
+
+    @property
+    def columns(self):
+        return self._container.columns
+
+    @property
+    def items(self):
+        return self._container.items
+

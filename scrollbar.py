@@ -4,10 +4,25 @@ from Tkinter import Scrollbar as TkScrollbar
 HORIZONTAL = 'horizontal'
 VERTICAL = 'vertical'
 
-class ScrollBar(Control):
+class BaseScrollBar(Control):
     def __init__(self, parent, **kwargs):
         Control.__init__(self, TkScrollbar(parent._frame), **kwargs)
-        self._ctrl.set(0, 1)
+    
+    @property
+    def orientation(self):
+        return self._control_get('orient')
+
+    @orientation.setter
+    def orientation(self, value):
+        self._control_set('orient', value)
+
+    def set(self, min_value, max_value):
+        return self._ctrl.set(min_value, max_value)
+
+class ScrollBar(BaseScrollBar):
+    def __init__(self, parent, **kwargs):
+        BaseScrollBar.__init__(self, parent, **kwargs)
+        self.set(0, 1)
         self._control_set('command', lambda *args: self._scroll(*args))
         self._min = 0
         self._max = 0

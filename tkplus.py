@@ -136,6 +136,11 @@ if __name__ == '__main__':
     #lb.items.add('bar')
     #lb.items.add('fizz')
     #lb.items.add('buzz')
+    #for j in range(0):
+    #    lb.items.add('foo')
+    #    lb.items.add('bar')
+    #    lb.items.add('fizz')
+    #    lb.items.add('buzz')
     #lb.popup_menu = popup2
 
     #def delete_lb_item():
@@ -161,14 +166,19 @@ if __name__ == '__main__':
     lv1.columns.add('Last Name')
     lv1.columns.add('Age')
 
-    for j in range(10):
+    for j in range(14):
         item = lv1.items.add('Todd')
         item.subitems.add('Suess')
 
     lv1.items[0].text = 'Toddulus'
 
+    #lv1.visible = True
+
     def add_col():
-        lv1.columns.add('Time')
+        #item = lv1.items.add('Todd')
+        print lv1._container._ctrl.yview()
+        print lv1._yscroll._ctrl.get()
+        #lv1.columns.add('Time')
     b2.on_click = add_col
 
     f.icon = 'notepad.ico'
