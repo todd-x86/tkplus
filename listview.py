@@ -176,8 +176,6 @@ class BaseListView(Control):
     def items(self):
         return self._items
 
-from pprint import pprint
-
 class ListView(ScrollContainer):
     def __init__(self, parent, **kwargs):
         ScrollContainer.__init__(self, parent, **kwargs)

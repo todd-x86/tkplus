@@ -17,6 +17,7 @@ from listbox import ListBox
 from combobox import ComboBox
 from statusbar import StatusBar
 from listview import ListView
+from treeview import TreeView
 import logging
 import sys
 
@@ -161,27 +162,33 @@ if __name__ == '__main__':
     #popup1.create('combo selection?', on_click=combo_sel)
     f.popup_menu = popup1
 
-    lv1 = ListView(f, top=80, left=5, width=600, height=300)
-    lv1.columns.add('First Name')
-    lv1.columns.add('Last Name')
-    lv1.columns.add('Age')
+    #lv1 = ListView(f, top=80, left=5, width=600, height=300)
+    #lv1.columns.add('First Name')
+    #lv1.columns.add('Last Name')
+    #lv1.columns.add('Age')
 
-    for j in range(14):
-        item = lv1.items.add('Todd')
-        item.subitems.add('Suess')
+    #for j in range(14):
+    #    item = lv1.items.add('Todd')
+    #    item.subitems.add('Suess')
 
-    lv1.items[0].text = 'Toddulus'
+    #lv1.items[0].text = 'Toddulus'
 
     #lv1.visible = True
 
-    def add_col():
+    #def add_col():
         #item = lv1.items.add('Todd')
-        print lv1._container._ctrl.yview()
-        print lv1._yscroll._ctrl.get()
+        #print lv1._container._ctrl.yview()
+        #print lv1._yscroll._ctrl.get()
         #lv1.columns.add('Time')
-    b2.on_click = add_col
+    #b2.on_click = add_col
 
     f.icon = 'notepad.ico'
+
+    tv1 = TreeView(f, top=80, left=5, width=600, height=300)
+    item = tv1.items.add('C:')
+    item.add('Documents and Settings')
+    item.add('Users').add('Todd Suess').add('Desktop')
+    item.add('Windows').add('system32')
 
     sb = StatusBar(f)
 
