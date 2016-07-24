@@ -1,5 +1,4 @@
-from exception import ExceptionHandler, handle_exception
-import Tkinter as tk
+from exception import ExceptionHandler, handle_exception, enable_handler
 
 class Application(object):
     def __init__(self):
@@ -9,7 +8,7 @@ class Application(object):
         pass
     
     def run(self):
-        tk.CallWrapper = ExceptionHandler
+        enable_handler()
         try:
             self.on_show()
         except Exception as E:
