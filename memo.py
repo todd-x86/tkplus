@@ -13,5 +13,6 @@ class Memo(Control):
 
     @text.setter
     def text(self, value):
+        value = str(value)
         self._ctrl.delete(1.0, END)
         self._ctrl.insert(END, value)
