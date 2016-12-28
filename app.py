@@ -1,4 +1,4 @@
-from exception import ExceptionHandler, handle_exception, enable_handler
+from exception import handle_exception, enable_handler
 
 class Application(object):
     def __init__(self):
