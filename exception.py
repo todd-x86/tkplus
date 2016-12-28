@@ -36,9 +36,9 @@ class ExceptionHandler(object):
     def __call__(self, *args):
         try:
             if self._subst:
-                return apply(self._subst, args)
+                return self._subst(*args)
             else:
-                return apply(self._func, args)
+                return self._func(*args)
         except SystemExit, msg:
             raise SystemExit, msg
         except Exception as ex:
