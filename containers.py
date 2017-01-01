@@ -1,13 +1,11 @@
-from panel import Panel, BORDER_NONE
+from control import CustomControl
 from scrollbar import BaseScrollBar
 from Tkinter import LEFT, BOTH, RIGHT, Y
 
-class ScrollContainer(Panel):
+class ScrollContainer(CustomControl):
     def __init__(self, parent, **kwargs):
-        Panel.__init__(self, parent, **kwargs)
+        CustomControl.__init__(self, parent, **kwargs)
         self._yscroll = BaseScrollBar(self, top=0, left=self.width, height=self.height, width=28)
-        self.border_style = BORDER_NONE
-        self.border_width = 0
         # TODO: Make an event handler
         self.on_show = self._reset_scrollbar
 

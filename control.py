@@ -1,3 +1,4 @@
+from Tkinter import Frame as TkFrame
 from collections import namedtuple
 
 Rect = namedtuple('Rect', ['left', 'top', 'width', 'height'])
@@ -151,3 +152,13 @@ class TextControl(Control):
     @alignment.setter
     def alignment(self, value):
         self._control_set('anchor', value)
+
+class CustomControl(Control):
+    def __init__(self, parent, **kwargs):
+        # NOTE: CustomControl is essentially the same as Panel except
+        #       that Panel can be enhanced whereas CustomControl is
+        #       to remain fairly minimal.
+        Control.__init__(self, TkFrame(parent._frame), **kwargs)
+        self._control_set('relief', 'flat')
+        self._control_set('borderwidth', 0)
+        self._frame = self._ctrl
