@@ -134,9 +134,9 @@ class Control(BaseControl):
 
 # Text Control descendent
 
-ALIGNMENT_LEFT = 'w'
-ALIGNMENT_RIGHT = 'e'
-ALIGNMENT_CENTER = 'center'
+ALIGNMENT_LEFT = ('left', 'w')
+ALIGNMENT_RIGHT = ('right', 'e')
+ALIGNMENT_CENTER = ('center', 'center')
 
 class TextControl(Control):
     def __init__(self, ctrl, **kwargs):
@@ -153,11 +153,12 @@ class TextControl(Control):
 
     @property
     def alignment(self):
-        return self._control_get('anchor')
+        return (self._control_get('justify'), self._control_get('anchor'))
 
     @alignment.setter
     def alignment(self, value):
-        self._control_set('anchor', value)
+        self._control_set('justify', value[0])
+        self._control_set('anchor', value[1])
 
 class CustomControl(Control):
     def __init__(self, parent, **kwargs):
