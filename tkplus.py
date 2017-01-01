@@ -81,11 +81,11 @@ class TestApp(Application):
         dlg.multiple = True
         dlg.title = 'Pick a file'
         dlg.filter = 'Text Documents|*.txt'
-        def raise_ex(self):
+        def raise_ex():
             raise ValueError('If I had a nickel for every exception that was thrown...')
         b2.on_click = raise_ex
 
-        f.icon = 'notepad.ico'
+        #f.icon = 'notepad.ico'
 
         tv1 = TreeView(f, top=80, left=5, width=600, height=300)
         item = tv1.items.add('C:')

@@ -10,8 +10,8 @@ class NotepadForm(Form):
     def __init__(self, filename=None):
         Form.__init__(self, width=640, height=480)
         self._set_caption(filename)
-        self._editor = Memo(self, left=0, top=0, width=self.width, height=self.height)
         self._status = StatusBar(self)
+        self._editor = Memo(self, left=0, top=0, width=self.width, height=self.height-self._status.height)
         self._create_menubar()
 
     def _file_new(self):

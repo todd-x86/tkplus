@@ -7,6 +7,7 @@ class ScrollContainer(Panel):
         Panel.__init__(self, parent, **kwargs)
         self._yscroll = BaseScrollBar(self, top=0, left=self.width, height=self.height, width=28)
         self.border_style = BORDER_NONE
+        self.border_width = 0
         # TODO: Make an event handler
         self.on_show = self._reset_scrollbar
 

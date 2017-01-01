@@ -13,6 +13,7 @@ def handle_exception(ex, stacktrace=None):
                left=100, top=100, width=350, height=180)
     frm.resizable = False
     msg = Label(frm, left=45, top=5, width=305, height=40, caption=ex.message)
+    msg.wordwrap = True
     img = Image(frm, left=5, top=15, width=32, height=32, file=err_icon)
     trace = Memo(frm, left=5, top=55, width=335, height=90)
     trace.text = stacktrace

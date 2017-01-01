@@ -30,6 +30,7 @@ class Control(BaseControl):
 
     @property
     def enabled(self):
+        self._ctrl.update_idletasks()
         return self._control_get('state') != 'disabled'
 
     @enabled.setter
@@ -43,6 +44,7 @@ class Control(BaseControl):
 
     @property
     def width(self):
+        self._ctrl.update_idletasks()
         return self._ctrl.winfo_width()
 
     @width.setter
@@ -52,6 +54,7 @@ class Control(BaseControl):
 
     @property
     def left(self):
+        self._ctrl.update_idletasks()
         return self._ctrl.winfo_x()
 
     @left.setter
@@ -61,6 +64,7 @@ class Control(BaseControl):
 
     @property
     def top(self):
+        self._ctrl.update_idletasks()
         return self._ctrl.winfo_y()
 
     @top.setter
@@ -70,6 +74,7 @@ class Control(BaseControl):
 
     @property
     def height(self):
+        self._ctrl.update_idletasks()
         return self._ctrl.winfo_height()
 
     @height.setter
