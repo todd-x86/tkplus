@@ -1,4 +1,4 @@
-from Tkinter import Frame as TkFrame
+from Tkinter import Frame as TkFrame, Canvas as TkCanvas
 from collections import namedtuple
 
 Rect = namedtuple('Rect', ['left', 'top', 'width', 'height'])
@@ -168,3 +168,28 @@ class CustomControl(Control):
         self._control_set('relief', 'flat')
         self._control_set('borderwidth', 0)
         self._frame = self._ctrl
+
+class GraphicControl(Control):
+    def __init__(self, parent, **kwargs):
+        Control.__init__(self, TkCanvas(parent._frame), **kwargs)
+        self._canvas = Canvas(self._ctrl)
+        self._frame = self._ctrl
+        self.repaint()
+
+    @property
+    def canvas(self):
+        return self._canvas
+
+    def refresh(self):
+        self.clear()
+        self.repaint()
+
+    def clear(self):
+        self._ctrl.delete('all')
+
+    def repaint(self):
+        self.on_paint()
+
+    def on_paint(self):
+        # NOTE: virtual method
+        pass
