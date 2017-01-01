@@ -3,9 +3,15 @@ from collections import namedtuple
 
 Rect = namedtuple('Rect', ['left', 'top', 'width', 'height'])
 
+# Events for binding
+EVENT_MOUSECLICK_RIGHT = '<Button-3>'
+
 class BaseControl(object):
     def __init__(self, ctrl=None):
         self._ctrl = ctrl
+
+    def bind(self, evt, callback):
+        self._ctrl.bind(evt, callback)
 
     def _control_get(self, key):
         return self._ctrl.config().get(key)
@@ -91,9 +97,9 @@ class Control(BaseControl):
     def popup_menu(self, value):
         self._popup = value
         if not value:
-            self._ctrl.bind("<Button-3>", lambda x: "break")
+            self.bind(EVENT_MOUSECLICK_RIGHT, lambda x: "break")
         else:
-            self._ctrl.bind("<Button-3>", self._invoke_popup)
+            self.bind(EVENT_MOUSECLICK_RIGHT, self._invoke_popup)
 
     def _invoke_popup(self, event):
         self._popup.popup(event.x_root, event.y_root)

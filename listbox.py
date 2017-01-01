@@ -1,6 +1,4 @@
 from control import Control
-from scrollbar import ScrollBar
-from panel import Panel, BORDER_NONE
 from containers import ScrollContainer
 from Tkinter import Listbox as TkListBox, END, BOTH, LEFT, RIGHT, Y
 
