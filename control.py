@@ -20,6 +20,14 @@ class BaseControl(object):
         set_args = {key: value}
         self._ctrl.config(**set_args)
 
+# Alignment types
+ALIGN_BOTTOM = {'side':'bottom', 'fill':'x'}
+ALIGN_TOP = {'side':'top', 'fill':'x'}
+ALIGN_LEFT = {'side':'left', 'fill':'y'}
+ALIGN_RIGHT = {'side':'right', 'fill':'y'}
+ALIGN_CLIENT = {'fill':'both', 'expand':'1'}
+ALIGN_NONE = None
+
 class Control(BaseControl):
     def __init__(self, ctrl=None, **kwargs):
         BaseControl.__init__(self, ctrl)
@@ -27,6 +35,7 @@ class Control(BaseControl):
         if ctrl:
             self._place(kwargs)
         self._popup = None
+        self._align = ALIGN_NONE
 
     def _place(self, kwargs):
         self.left = kwargs['left']
@@ -36,13 +45,25 @@ class Control(BaseControl):
         self._visible = True
 
     @property
+    def align(self):
+        return self._align
+
+    @align.setter
+    def align(self, value):
+        self._align = value
+        self._reposition()
+
+    @property
     def enabled(self):
-        self._ctrl.update_idletasks()
+        return self._enabled()
+
+    def _enabled(self):
+        self.update()
         return self._control_get('state') != 'disabled'
 
     @enabled.setter
     def enabled(self, value):
-        if self.enabled == value:
+        if self._enabled() == value:
             return
         elif value:
             self._control_set('normal')
@@ -51,43 +72,43 @@ class Control(BaseControl):
 
     @property
     def width(self):
-        self._ctrl.update_idletasks()
+        self.update()
         return self._ctrl.winfo_width()
 
     @width.setter
     def width(self, value):
-        self._ctrl.place(x=self.left, y=self.top, width=value, height=self.height)
-        self._ctrl.update_idletasks()
+        self.place(x=self.left, y=self.top, width=value, height=self.height)
+        self.update()
 
     @property
     def left(self):
-        self._ctrl.update_idletasks()
+        self.update()
         return self._ctrl.winfo_x()
 
     @left.setter
     def left(self, value):
-        self._ctrl.place(x=value, y=self.top, width=self.width, height=self.height)
-        self._ctrl.update_idletasks()
+        self.place(x=value, y=self.top, width=self.width, height=self.height)
+        self.update()
 
     @property
     def top(self):
-        self._ctrl.update_idletasks()
+        self.update()
         return self._ctrl.winfo_y()
 
     @top.setter
     def top(self, value):
-        self._ctrl.place(x=self.left, y=value, width=self.width, height=self.height)
-        self._ctrl.update_idletasks()
+        self.place(x=self.left, y=value, width=self.width, height=self.height)
+        self.update()
 
     @property
     def height(self):
-        self._ctrl.update_idletasks()
+        self.update()
         return self._ctrl.winfo_height()
 
     @height.setter
     def height(self, value):
-        self._ctrl.place(x=self.left, y=self.top, width=self.width, height=value)
-        self._ctrl.update_idletasks()
+        self.place(x=self.left, y=self.top, width=self.width, height=value)
+        self.update()
 
     @property
     def popup_menu(self):
@@ -111,25 +132,46 @@ class Control(BaseControl):
 
     @visible.setter
     def visible(self, value):
-        if self.visible == value:
+        if self._visible == value:
             return
         elif value:
             self.show()
         else:
             self.hide()
+        self._visible = value
 
     def on_show(self):
         pass
 
     def hide(self):
-        self._ctrl.place_forget()
+        if self._align == ALIGN_NONE:
+            self._ctrl.place_forget()
+        else:
+            self._ctrl.pack_forget()
 
     def show(self):
         self.on_show()
-        self._ctrl.place(x=self.left, y=self.top, width=self.width, height=self.height)
-        self._ctrl.update_idletasks()
+        self._reposition()
+        self.update()
+
+    def _reposition(self):
+        if self._align == ALIGN_NONE:
+            # Place control
+            self.place(x=self.left, y=self.top, width=self.width, height=self.height)
+        else:
+            # Pack / align control
+            self.pack(**self._align)
 
     def refresh(self):
+        self.update()
+
+    def pack(self, *args, **kwargs):
+        return self._ctrl.pack(*args, **kwargs)
+
+    def place(self, *args, **kwargs):
+        return self._ctrl.place(*args, **kwargs)
+
+    def update(self):
         self._ctrl.update_idletasks()
 
 # Text Control descendent

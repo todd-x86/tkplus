@@ -1,4 +1,4 @@
-from control import CustomControl
+from control import CustomControl, ALIGN_CLIENT, ALIGN_RIGHT
 from scrollbar import BaseScrollBar
 from Tkinter import LEFT, BOTH, RIGHT, Y
 
@@ -6,14 +6,12 @@ class ScrollContainer(CustomControl):
     def __init__(self, parent, **kwargs):
         CustomControl.__init__(self, parent, **kwargs)
         self._yscroll = BaseScrollBar(self, top=0, left=self.width, height=self.height, width=28)
+        self._yscroll.align = ALIGN_RIGHT
         # TODO: Make an event handler
         self.on_show = self._reset_scrollbar
 
     def _init_container(self, control):
-        control.left = 0
-        control.top = 0
-        control.width = self.width
-        control.height = self.height
+        control.align = ALIGN_CLIENT
         self._container = control
         self._bind()
         self._yscroll.refresh()
@@ -29,23 +27,21 @@ class ScrollContainer(CustomControl):
         # Setup appropriate callbacks
         self._container._control_set('yscrollcommand', self._on_scroll_view)
         self._yscroll._control_set('command', self._on_scroll)
-        self._scrollbar_visible = False
+        self._yscroll.visible = False
 
         self._yscroll.refresh()
         self._container.refresh()
 
     def _show_scrollbar(self):
-        self._yscroll._ctrl.pack(side=RIGHT, fill=Y)
-        self._scrollbar_visible = True
+        self._yscroll.visible = True #_ctrl.pack(side=RIGHT, fill=Y)
 
     def _hide_scrollbar(self):
-        self._yscroll._ctrl.tk.call('grid', 'remove', self._yscroll._ctrl)
-        self._scrollbar_visible = False
+        self._yscroll.visible = False
 
     def _on_scroll_view(self, ymin, ymax):
-        if self._scrollbar_visible and float(ymax)-float(ymin) == 1.0:
+        if self._yscroll.visible and float(ymax)-float(ymin) == 1.0:
             self._hide_scrollbar()
-        elif not self._scrollbar_visible and float(ymax)-float(ymin) != 1.0:
+        elif not self._yscroll.visible and float(ymax)-float(ymin) != 1.0:
             self._show_scrollbar()
         return self._yscroll.set(ymin, ymax)
             

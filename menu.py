@@ -1,13 +1,25 @@
 from control import BaseControl
-from Tkinter import Menu as TkMenu
+from Tkinter import Menu as TkMenu, BooleanVar
 
 class MenuItem(object):
     def __init__(self, menu, title, **kwargs):
         self._menu = menu
-        # NOTE: For whatever reason, lambdas do not work in this case...
-        self._menu._ctrl.add_command(label=title, command=self._on_click)
+        if kwargs.get('checkbox'):
+            # Checkbox menu item
+            self._checkvar = BooleanVar()
+            self._checkvar.set(kwargs.get('checked', False))
+
+            self._menu._ctrl.add_checkbutton(label=title, command=self._on_check, variable=self._checkvar)
+        else:
+            # NOTE: For whatever reason, lambdas do not work in this case...
+            self._menu._ctrl.add_command(label=title, command=self._on_click)
+
         if kwargs.get('on_click'):
             self.on_click = kwargs['on_click']
+
+    def _on_check(self):
+        """Handler for keeping on_click virtual with checkbox option"""
+        self.on_click(self._checkvar.get())
 
     def _on_click(self):
         """Handler for keeping on_click virtual"""
